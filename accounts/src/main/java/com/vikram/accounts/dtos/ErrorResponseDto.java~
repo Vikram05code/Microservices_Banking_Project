@@ -1,0 +1,4 @@
+package com.vikram.accounts.dtos;
+
+public class ErrorResponseDto {
+}
