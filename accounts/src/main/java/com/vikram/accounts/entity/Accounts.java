@@ -2,6 +2,7 @@ package com.vikram.accounts.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor @ToString
@@ -11,6 +12,7 @@ public class Accounts {
     @Column(name="customer_id")
     private Long customerId;
 
+    @Id
     @Column(name="account_number")
     private Long accountNumber;
 
