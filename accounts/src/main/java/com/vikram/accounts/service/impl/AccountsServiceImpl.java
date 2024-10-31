@@ -13,6 +13,9 @@ import com.vikram.accounts.repository.AccountsRepository;
 import com.vikram.accounts.repository.CustomerRepository;
 import com.vikram.accounts.service.IAccountsService;
 import lombok.AllArgsConstructor;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +26,8 @@ import java.util.Random;
 @AllArgsConstructor
 public class AccountsServiceImpl  implements IAccountsService {
 
+    private static final Logger logger =  LogManager.getLogger(AccountsServiceImpl.class);
+
     private AccountsRepository accountsRepository;
     private CustomerRepository customerRepository;
 
@@ -31,6 +36,7 @@ public class AccountsServiceImpl  implements IAccountsService {
      */
     @Override
     public void createAccount(CustomerDto customerDto) {
+        try{
         Customer customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
         Optional<Customer> optionalCustomer = customerRepository.findByMobileNumber(customerDto.getMobileNumber());
         if(optionalCustomer.isPresent()) {
@@ -39,6 +45,11 @@ public class AccountsServiceImpl  implements IAccountsService {
         }
         Customer savedCustomer = customerRepository.save(customer);
         accountsRepository.save(createNewAccount(savedCustomer));
+
+
+        }catch(Exception e){
+            logger.error(e.getMessage());
+        }
     }
 
     /**
